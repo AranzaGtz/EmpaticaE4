@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Session List</title>
+</head>
+<body>
+    <h1>Sessions</h1>
+    <ul>
+        {% for session in sessions %}
+            <li><a href="{% url 'session_detail' session.id %}">{{ session.session_id }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

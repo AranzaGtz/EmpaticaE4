@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Session Detail</title>
+</head>
+<body>
+    <h1>Session: {{ session.session_id }}</h1>
+
+    <h2>BVP Data</h2>
+    <ul>
+        {% for data in bvp_data %}
+            <li>{{ data.timestamp }}: {{ data.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>EDA Data</h2>
+    <ul>
+        {% for data in eda_data %}
+            <li>{{ data.timestamp }}: {{ data.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Acceleration Data</h2>
+    <ul>
+        {% for data in acc_data %}
+            <li>{{ data.timestamp }}: X: {{ data.x }} Y: {{ data.y }} Z: {{ data.z }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Heart Rate Data</h2>
+    <ul>
+        {% for data in hr_data %}
+            <li>{{ data.timestamp }}: {{ data.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>IBI Data</h2>
+    <ul>
+        {% for data in ibi_data %}
+            <li>{{ data.timestamp }}: {{ data.duration }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Temperature Data</h2>
+    <ul>
+        {% for data in temp_data %}
+            <li>{{ data.timestamp }}: {{ data.value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
