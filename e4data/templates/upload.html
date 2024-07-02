@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Subir Archivo</title>
+    <title>Analisis de Sessiones Emp.</title>
 </head>
 <body>
+    <h1>Analisis de Sessiones en formato CSV de Pulsera Emprtatica E4</h1>
     <h2>Subir Archivo TEMP.CSV</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Subir</button>
+        <button type="submit">Analizar</button>
     </form>
 
     {% if promedio_temp %}
