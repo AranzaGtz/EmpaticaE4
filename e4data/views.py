@@ -7,6 +7,38 @@ from .models import AnalisisTemperatura
 from .forms import archivo_form
 from statistics import mean, median # Para calcular estadísticas.
 
+# Vista para clasificar la temperatura
+def clasificar_temperatura(valor):
+    if valor < 36.1:
+        return 'baja'
+    elif valor > 37.2:
+        return 'alta'
+    elif valor >= 36.1 and valor <= 37.2:
+        return 'normal'
+    else:
+        return 'error'
+    
+# Vista para resumen del analisis de temperatura
+def resumen_analisis(temperaturas):
+    bajas = sum(1 for t in temperaturas if clasificar_temperatura(t) == 'baja')
+    altas = sum(1 for t in temperaturas if clasificar_temperatura(t) == 'alta')
+    normales = sum(1 for t in temperaturas if clasificar_temperatura(t) == 'normal')
+    errores = sum(1 for t in temperaturas if clasificar_temperatura(t) == 'error')
+
+    total = len(temperaturas)
+    resumen = "Resumen del análisis de temperatura:\n"
+    if normales > 0:
+        resumen += f" - {normales/total*100:.2f}% de las temperaturas son normales.\n"
+    if bajas > 0:
+        resumen += f" - {bajas/total*100:.2f}% de las temperaturas son bajas.\n"
+    if altas > 0:
+        resumen += f" - {altas/total*100:.2f}% de las temperaturas son altas.\n"
+    if errores > 0:
+        resumen += f" - {errores/total*100:.2f}% de las temperaturas parecen ser errores.\n"
+
+    return resumen
+
+
 # Vista para subir archivo
 def captura_file(request):
     if request.method == 'POST':
@@ -32,6 +64,9 @@ def captura_file(request):
             max_temp = max(temperaturas)
             min_temp = min(temperaturas)
 
+            # Generar resumen del análisis
+            resumen = resumen_analisis(temperaturas)
+
             # Guardar en la base de datos
             analisis = AnalisisTemperatura(
                 promedio=promedio_temp,
@@ -49,6 +84,7 @@ def captura_file(request):
                 'mediana_temp': mediana_temp,
                 'max_temp': max_temp,
                 'min_temp': min_temp,
+                'resumen': resumen,
                 'form': formulario
             }
             
