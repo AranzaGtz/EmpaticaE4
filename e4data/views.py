@@ -1,7 +1,9 @@
 import csv
-from datetime import datetime
+import os
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage # Para manejar la carga y almacenamiento de archivos.
+from django.conf import settings
+from .models import AnalisisTemperatura
 from .forms import archivo_form
 from statistics import mean, median # Para calcular estadísticas.
 
@@ -30,12 +32,23 @@ def captura_file(request):
             max_temp = max(temperaturas)
             min_temp = min(temperaturas)
 
+            # Guardar en la base de datos
+            analisis = AnalisisTemperatura(
+                promedio=promedio_temp,
+                mediana=mediana_temp,
+                maximo=max_temp,
+                minimo=min_temp
+            )
+            analisis.save()
+
+            # Borrar el archivo después de procesarlo
+            os.remove(ruta_archivo)
+
             contexto = {
                 'promedio_temp': promedio_temp,
                 'mediana_temp': mediana_temp,
                 'max_temp': max_temp,
                 'min_temp': min_temp,
-                'temperaturas': temperaturas,
                 'form': formulario
             }
             

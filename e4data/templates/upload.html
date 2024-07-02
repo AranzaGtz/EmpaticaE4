@@ -11,12 +11,13 @@
         <button type="submit">Subir</button>
     </form>
 
-    {% if temperaturas %}
+    {% if promedio_temp %}
         <h2>Análisis de Temperatura</h2>
         <p>Promedio de Temperatura: {{ promedio_temp }} °C</p>
         <p>Mediana de Temperatura: {{ mediana_temp }} °C</p>
         <p>Temperatura Máxima: {{ max_temp }} °C</p>
         <p>Temperatura Mínima: {{ min_temp }} °C</p>
     {% endif %}
+    
 </body>
 </html>
