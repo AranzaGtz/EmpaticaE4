@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Subir archivo</title>
+    <title>Subir Archivo</title>
 </head>
 <body>
-    <h2>Subir Archivo</h2>
+    <h2>Subir Archivo TEMP.CSV</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Subir</button>
     </form>
+
+    {% if temperaturas %}
+        <h2>Análisis de Temperatura</h2>
+        <p>Promedio de Temperatura: {{ promedio_temp }} °C</p>
+        <p>Mediana de Temperatura: {{ mediana_temp }} °C</p>
+        <p>Temperatura Máxima: {{ max_temp }} °C</p>
+        <p>Temperatura Mínima: {{ min_temp }} °C</p>
+    {% endif %}
 </body>
 </html>
