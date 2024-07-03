@@ -5,11 +5,11 @@
 </head>
 <body>
     <h1>Analisis de Sessiones en formato CSV de Pulsera Emprtatica E4</h1>
-    <h2>Subir Archivo TEMP.CSV</h2>
+    <h2>Subir Archivos CSV</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Analizar</button>
+        <button type="submit">Subir</button>
     </form>
 
     {% if promedio_temp %}
@@ -18,10 +18,16 @@
         <p>Mediana de Temperatura: {{ mediana_temp }} °C</p>
         <p>Temperatura Máxima: {{ max_temp }} °C</p>
         <p>Temperatura Mínima: {{ min_temp }} °C</p>
-        <h3>Resumen</h3>
-        <p>{{ resumen }}</p>
+        <p>{{ resumen_temp }}</p>
     {% endif %}
-    
 
+    {% if promedio_hr %}
+        <h2>Análisis de Frecuencia Cardiaca</h2>
+        <p>Promedio de Frecuencia Cardiaca: {{ promedio_hr }} ppm</p>
+        <p>Mediana de Frecuencia Cardiaca: {{ mediana_hr }} ppm</p>
+        <p>Frecuencia Cardiaca Máxima: {{ max_hr }} ppm</p>
+        <p>Frecuencia Cardiaca Mínima: {{ min_hr }} ppm</p>
+        <p>{{ resumen_hr }}</p>
+    {% endif %}
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from e4data import views  # Importa las vistas de tu aplicación
