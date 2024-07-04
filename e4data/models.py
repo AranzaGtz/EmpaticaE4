@@ -11,7 +11,8 @@ class AnalisisTemperatura(models.Model):
     mediana = models.FloatField()
     maximo = models.FloatField()
     minimo = models.FloatField()
-    fecha_analisis = models.DateTimeField(auto_now_add=True)
+    inicio_sesion = models.DateTimeField(null=True, blank=True)
+    tasa_muestreo = models.FloatField(null=True, blank=True)
 
 
 #   MODELO PARA ANALIZAR FRECUANCIA CARDIACA
@@ -21,4 +22,5 @@ class AnalisisFrecuenciaCardiaca(models.Model):
     mediana = models.FloatField()
     maximo = models.FloatField()
     minimo = models.FloatField()
-    fecha_analisis = models.DateTimeField(auto_now_add=True)
+    inicio_sesion = models.DateTimeField(null=True, blank=True)
+    tasa_muestreo = models.FloatField(null=True, blank=True)
