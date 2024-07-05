@@ -2,7 +2,9 @@
 <html>
 
 <head>
+    {% load static %}
     <title>Analisis de Sessiones Emp.</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
     <!-- Incluyendo Chart.js y el plugin de anotación -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
@@ -11,7 +13,7 @@
 <body>
     <h1>Analisis de Sessiones en formato CSV de Pulsera Emprtatica E4</h1>
     <h2>Subir Archivos CSV</h2>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" action="{% url 'procesar_archivos' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Subir</button>
@@ -28,6 +30,7 @@
     <!-- Canvas para el gráfico de temperatura -->
     <canvas id="graficoTemperatura" width="400" height="200"></canvas>
     <script>
+
         // Configuración del gráfico de temperatura
         var ctx = document.getElementById('graficoTemperatura').getContext('2d');
         var graficoTemperatura = new Chart(ctx, {
@@ -98,6 +101,7 @@
                 }
             }
         });
+        
     </script>
     {% endif %}
 
@@ -184,6 +188,84 @@
         });
     </script>
     {% endif %}
+
+    {% if promedio_x %}
+    <h2>Análisis del Acelerómetro</h2>
+    <p>Promedio de Aceleración X: {{ promedio_x }} g</p>
+    <p>Promedio de Aceleración Y: {{ promedio_y }} g</p>
+    <p>Promedio de Aceleración Z: {{ promedio_z }} g</p>
+    <p>Mediana de Aceleración X: {{ mediana_x }} g</p>
+    <p>Mediana de Aceleración Y: {{ mediana_y }} g</p>
+    <p>Mediana de Aceleración Z: {{ mediana_z }} g</p>
+    <p>Aceleración Máxima X: {{ max_x }} g</p>
+    <p>Aceleración Máxima Y: {{ max_y }} g</p>
+    <p>Aceleración Máxima Z: {{ max_z }} g</p>
+    <p>Aceleración Mínima X: {{ min_x }} g</p>
+    <p>Aceleración Mínima Y: {{ min_y }} g</p>
+    <p>Aceleración Mínima Z: {{ min_z }} g</p>
+    <p>{{ resumen_acc }}</p>
+    
+    <!-- Canvas para el gráfico de acelerómetro -->
+    <canvas id="graficoAcelerometro" width="400" height="200"></canvas>
+    <script>
+        // Obtener el contexto del canvas donde se va a dibujar el gráfico
+        var ctx = document.getElementById('graficoAcelerometro').getContext('2d');
+    
+        // Configuración del gráfico de acelerómetro
+        var graficoAcelerometro = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico: barras
+            data: {
+                labels: Array.from({ length: {{ aceleracion_x|length }} }, (_, i) => i + 1), // Etiquetas para el eje X
+                datasets: [
+                    {
+                        label: 'Aceleración X (g)', // Etiqueta para el conjunto de datos de aceleración X
+                        data: {{ aceleracion_x }}, // Datos de aceleración X
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(255, 99, 132, 1)', // Color del borde de las barras
+                        borderWidth: 1 // Ancho del borde de las barras
+                    },
+                    {
+                        label: 'Aceleración Y (g)', // Etiqueta para el conjunto de datos de aceleración Y
+                        data: {{ aceleracion_y }}, // Datos de aceleración Y
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(54, 162, 235, 1)', // Color del borde de las barras
+                        borderWidth: 1 // Ancho del borde de las barras
+                    },
+                    {
+                        label: 'Aceleración Z (g)', // Etiqueta para el conjunto de datos de aceleración Z
+                        data: {{ aceleracion_z }}, // Datos de aceleración Z
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(75, 192, 192, 1)', // Color del borde de las barras
+                        borderWidth: 1 // Ancho del borde de las barras
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true, // Mostrar el título del eje X
+                            text: 'Índice' // Título del eje X
+                        }
+                    },
+                    y: {
+                        beginAtZero: true, // Comenzar el eje Y en cero
+                        title: {
+                            display: true, // Mostrar el título del eje Y
+                            text: 'Aceleración (g)' // Título del eje Y
+                        },
+                        ticks: {
+                            suggestedMin: -2, // Mínimo sugerido para el eje Y
+                            suggestedMax: 2 // Máximo sugerido para el eje Y
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
+    {% endif %}
+    
 </body>
 
 </html>

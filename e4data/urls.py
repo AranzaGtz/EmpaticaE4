@@ -3,11 +3,10 @@ from . import views
 
 urlpatterns = [
     
-    #   URLS PARA TEMPERATURA
-    path('', views.captura_file, name='index'),
-    path('upload/success/', views.archivo_suseso, name='upload_success'),  # Verifica esta línea
-
-    #   URLS PARA FRECUENCIA CARDIACA
-    
+    # path('', views.captura_file, name='index'),
+    # path('upload/success/', views.archivo_suseso, name='upload_success'),  # Verifica esta línea
+    path('', views.captura_file, name='captura_file'),
+    path('procesar_archivos/', views.procesar_archivos, name='procesar_archivos'),
+    path('loading/', views.loading_view, name='loading'),
     
 ]

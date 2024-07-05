@@ -5,4 +5,5 @@ class ArchivoForm(forms.Form):
     edad = forms.IntegerField(min_value=0, label='Edad')
     archivo_temp = forms.FileField(label='Archivo de Temperatura (TEMP.csv)')
     archivo_hr = forms.FileField(label='Archivo de Frecuencia Cardíaca (HR.csv)', required=False)
+    archivo_acc = forms.FileField(label='Archivo de Acelerometro (ACC.csv)',required=False)
     # Necesitamos crear este formulario para permitir la carga de archivos CSV
