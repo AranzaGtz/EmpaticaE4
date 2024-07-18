@@ -2,28 +2,49 @@ from concurrent.futures import ThreadPoolExecutor
 import csv
 import datetime
 import os
+from django.contrib import messages
 import pytz  # Importa pytz para manejar las zonas horarias
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from .models import AnalisisAcelerometro, AnalisisTemperatura, AnalisisFrecuenciaCardiaca, Usuario
-from .forms import ArchivoForm
+from .forms import ArchivoForm, LoginForm
 from datetime import datetime
 from statistics import mean, median
-
+from django.contrib.auth.decorators import login_required
 # Define la zona horaria UTC
 utc = pytz.UTC
 
 #    --   VISTAS GENERALES    --
 
+def login_view(request):
+     if request.method == 'POST':
+          form = LoginForm(request.POST)
+          if form.is_valid():
+               user = form.cleaned_data['user']
+               password = form.cleaned_data['password']
+               try:
+                    usuario = Usuario.objects.get(user=user, password=password)
+                    # Inicia sesión del usuario
+                    request.session['usuario_id'] = usuario.id
+                    messages.success(request, 'Inicio de sesión exitoso')
+                    return redirect('home')  # Redirige a la página de inicio o la que prefieras
+               except Usuario.DoesNotExist:
+                    messages.error(request, 'Usuario o contraseña incorrectos')
+     else:
+          form = LoginForm()
+          
+     return render(request, 'login.html', {'form': form})
+
+@login_required
 def captura_file(request):
     if request.method == 'POST':
         # Redirigir a la página de carga
         return HttpResponseRedirect(reverse('loading'))
     else:
-        formulario = ArchivoForm()
+          formulario = ArchivoForm()
     return render(request, 'upload.html', {'form': formulario})
 
 def loading_view(request):
