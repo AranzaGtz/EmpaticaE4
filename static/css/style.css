@@ -1,0 +1,51 @@
+body {
+    background: linear-gradient(135deg, #006994, #00c3ff);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho máximo del contenido */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos dentro del contenedor */
+}
+
+.card {
+    background-color: #1a1a2e;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    width: 80%;
+    max-width: 800px; /* Ajusta el ancho máximo de las tarjetas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+canvas {
+    margin-top: 20px;
+    width: 100%;
+    height: 400px;
+}

@@ -44,3 +44,12 @@ class AnalisisBVP(AnalisisBase):
 
 class AnalisisIBI(AnalisisBase):
     pass
+
+class AnalisisEDA(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    promedio = models.FloatField()
+    mediana = models.FloatField()
+    maximo = models.FloatField()
+    minimo = models.FloatField()
+    inicio_sesion = models.DateTimeField(null=True, blank=True)
+    tasa_muestreo = models.FloatField(null=True, blank=True)

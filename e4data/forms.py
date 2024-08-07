@@ -8,3 +8,4 @@ class ArchivoForm(forms.Form):
     archivo_acc = forms.FileField(label='Archivo de Acelerómetro (ACC.csv)', required=False)
     archivo_bvp = forms.FileField(label='Archivo de BVP (BVP.csv)', required=False)
     archivo_ibi = forms.FileField(label='Archivo de IBI (IBI.csv)', required=False)
+    archivo_eda = forms.FileField(label='Archivo de EDA (EDA.csv)', required=False)  # Nuevo campo
