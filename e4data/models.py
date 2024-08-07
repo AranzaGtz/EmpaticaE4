@@ -4,8 +4,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     edad = models.IntegerField()
 
-#   MODELO PARA ANALIZAR TEMPERATURA
-class AnalisisTemperatura(models.Model):
+class AnalisisBase(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     promedio = models.FloatField()
     mediana = models.FloatField()
@@ -14,18 +13,15 @@ class AnalisisTemperatura(models.Model):
     inicio_sesion = models.DateTimeField(null=True, blank=True)
     tasa_muestreo = models.FloatField(null=True, blank=True)
 
+    class Meta:
+        abstract = True
 
-#   MODELO PARA ANALIZAR FRECUANCIA CARDIACA
-class AnalisisFrecuenciaCardiaca(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    promedio = models.FloatField()
-    mediana = models.FloatField()
-    maximo = models.FloatField()
-    minimo = models.FloatField()
-    inicio_sesion = models.DateTimeField(null=True, blank=True)
-    tasa_muestreo = models.FloatField(null=True, blank=True)
+class AnalisisTemperatura(AnalisisBase):
+    pass
 
-#   MODELO PARA ANALIZAR Acelerometro
+class AnalisisFrecuenciaCardiaca(AnalisisBase):
+    pass
+
 class AnalisisAcelerometro(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     promedio_x = models.FloatField()
@@ -40,5 +36,11 @@ class AnalisisAcelerometro(models.Model):
     minimo_x = models.FloatField()
     minimo_y = models.FloatField()
     minimo_z = models.FloatField()
-    inicio_sesion = models.DateTimeField()
-    tasa_muestreo = models.FloatField()
+    inicio_sesion = models.DateTimeField(null=True, blank=True)
+    tasa_muestreo = models.FloatField(null=True, blank=True)
+
+class AnalisisBVP(AnalisisBase):
+    pass
+
+class AnalisisIBI(AnalisisBase):
+    pass

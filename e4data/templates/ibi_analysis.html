@@ -1,0 +1,33 @@
+{% if promedio_ibi %}
+<div class="analysis-section">
+    <h2>Análisis de IBI</h2>
+    <p class="analysis-item">Promedio de IBI: {{ promedio_ibi|floatformat:2 }} ms</p>
+    <p class="analysis-item">Mediana de IBI: {{ mediana_ibi|floatformat:2 }} ms</p>
+    <p class="analysis-item">IBI Máximo: {{ max_ibi|floatformat:2 }} ms</p>
+    <p class="analysis-item">IBI Mínimo: {{ min_ibi|floatformat:2 }} ms</p>
+    <canvas id="graficoIBI" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('graficoIBI').getContext('2d');
+        var graficoIBI = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: {{ ibis|length }} }, (_, i) => i + 1),
+                datasets: [{
+                    label: 'IBI (ms)',
+                    data: {{ ibis }},
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Índice' }},
+                    y: { title: { display: true, text: 'IBI (ms)' }}
+                }
+            }
+        });
+    </script>
+</div>
+{% endif %}

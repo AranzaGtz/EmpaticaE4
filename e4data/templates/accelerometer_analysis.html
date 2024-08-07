@@ -1,0 +1,73 @@
+{% if promedio_x %}
+<div class="analysis-section">
+    <h2>Análisis del Acelerómetro</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="analysis-item">Promedio de Aceleración X: <strong>{{ promedio_x|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Promedio de Aceleración Y: <strong>{{ promedio_y|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Promedio de Aceleración Z: <strong>{{ promedio_z|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Mediana de Aceleración X: <strong>{{ mediana_x|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Mediana de Aceleración Y: <strong>{{ mediana_y|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Mediana de Aceleración Z: <strong>{{ mediana_z|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Máxima X: <strong>{{ max_x|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Máxima Y: <strong>{{ max_y|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Máxima Z: <strong>{{ max_z|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Mínima X: <strong>{{ min_x|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Mínima Y: <strong>{{ min_y|floatformat:2 }} g</strong></p>
+            <p class="analysis-item">Aceleración Mínima Z: <strong>{{ min_z|floatformat:2 }} g</strong></p>
+        </div>
+        <div class="col-md-6">
+            <canvas id="graficoAcelerometro" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('graficoAcelerometro').getContext('2d');
+        var graficoAcelerometro = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Array.from({ length: {{ aceleracion_x|length }} }, (_, i) => i + 1),
+                datasets: [
+                    {
+                        label: 'Aceleración X (g)',
+                        data: {{ aceleracion_x|safe }},
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Aceleración Y (g)',
+                        data: {{ aceleracion_y|safe }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Aceleración Z (g)',
+                        data: {{ aceleracion_z|safe }},
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Índice'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Aceleración (g)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endif %}

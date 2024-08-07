@@ -1,0 +1,33 @@
+{% if promedio_bvp %}
+<div class="analysis-section">
+    <h2>Análisis de BVP</h2>
+    <p class="analysis-item">Promedio de BVP: {{ promedio_bvp|floatformat:2 }}</p>
+    <p class="analysis-item">Mediana de BVP: {{ mediana_bvp|floatformat:2 }}</p>
+    <p class="analysis-item">BVP Máximo: {{ max_bvp|floatformat:2 }}</p>
+    <p class="analysis-item">BVP Mínimo: {{ min_bvp|floatformat:2 }}</p>
+    <canvas id="graficoBVP" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('graficoBVP').getContext('2d');
+        var graficoBVP = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: {{ bvps|length }} }, (_, i) => i + 1),
+                datasets: [{
+                    label: 'BVP',
+                    data: {{ bvps }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Índice' }},
+                    y: { title: { display: true, text: 'BVP' }}
+                }
+            }
+        });
+    </script>
+</div>
+{% endif %}

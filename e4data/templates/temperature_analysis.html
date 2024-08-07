@@ -1,0 +1,38 @@
+{% if promedio_temperatura %}
+<div class="analysis-section">
+    <h2>Análisis de Temperatura</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="analysis-item">Promedio de Temperatura: <strong>{{ promedio_temperatura|floatformat:2 }} °C</strong></p>
+            <p class="analysis-item">Mediana de Temperatura: <strong>{{ mediana_temperatura|floatformat:2 }} °C</strong></p>
+            <p class="analysis-item">Temperatura Máxima: <strong>{{ max_temperatura|floatformat:2 }} °C</strong></p>
+            <p class="analysis-item">Temperatura Mínima: <strong>{{ min_temperatura|floatformat:2 }} °C</strong></p>
+        </div>
+        <div class="col-md-6">
+            <canvas id="graficoTemperatura" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('graficoTemperatura').getContext('2d');
+        var graficoTemperatura = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Array.from({ length: {{ temperaturas|length }} }, (_, i) => i + 1),
+                datasets: [{
+                    label: 'Temperatura (°C)',
+                    data: {{ temperaturas|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Índice' }},
+                    y: { beginAtZero: true, title: { display: true, text: 'Temperatura (°C)' }}
+                }
+            }
+        });
+    </script>
+</div>
+{% endif %}
