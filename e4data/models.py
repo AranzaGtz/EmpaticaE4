@@ -3,6 +3,11 @@ from django.db import models
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     edad = models.IntegerField()
+    user = models.CharField(max_length=50, null=False)
+    password = models.CharField(max_length=20, null=False)
+
+    def __str__(self):
+        return self.user  # Devuelve el nombre de usuario como cadena
 
 class AnalisisBase(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
