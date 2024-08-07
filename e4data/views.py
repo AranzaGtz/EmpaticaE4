@@ -1,8 +1,6 @@
 import sys  # Importa el módulo sys
 from concurrent.futures import ThreadPoolExecutor
 import csv
-<<<<<<< HEAD
-=======
 import datetime
 import os
 from django.contrib import messages
@@ -14,46 +12,8 @@ from django.http import HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from .models import AnalisisAcelerometro, AnalisisTemperatura, AnalisisFrecuenciaCardiaca, Usuario
 from .forms import ArchivoForm, LoginForm
->>>>>>> ada897e17210352c794746f926b1530fe4cee99a
-from datetime import datetime
-import os
-import pytz
-from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse
-from django.core.files.storage import FileSystemStorage
-from .models import (AnalisisAcelerometro, AnalisisTemperatura, AnalisisFrecuenciaCardiaca,
-                     AnalisisBVP, AnalisisIBI, AnalisisEDA, Usuario)
-from .forms import ArchivoForm
-from statistics import mean, median
-from django.contrib.auth.decorators import login_required
-# Define la zona horaria UTC
-utc = pytz.UTC
 
-<<<<<<< HEAD
-=======
-#    --   VISTAS GENERALES    --
 
-def login_view(request):
-     if request.method == 'POST':
-          form = LoginForm(request.POST)
-          if form.is_valid():
-               user = form.cleaned_data['user']
-               password = form.cleaned_data['password']
-               try:
-                    usuario = Usuario.objects.get(user=user, password=password)
-                    # Inicia sesión del usuario
-                    request.session['usuario_id'] = usuario.id
-                    messages.success(request, 'Inicio de sesión exitoso')
-                    return redirect('home')  # Redirige a la página de inicio o la que prefieras
-               except Usuario.DoesNotExist:
-                    messages.error(request, 'Usuario o contraseña incorrectos')
-     else:
-          form = LoginForm()
-          
-     return render(request, 'login.html', {'form': form})
-
-@login_required
->>>>>>> ada897e17210352c794746f926b1530fe4cee99a
 def captura_file(request):
     if request.method == 'POST':
         return HttpResponseRedirect(reverse('loading'))
